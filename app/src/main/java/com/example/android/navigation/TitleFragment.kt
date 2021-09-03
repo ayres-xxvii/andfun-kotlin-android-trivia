@@ -17,13 +17,12 @@
 package com.example.android.navigation
 
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.navigation.Navigation
 import androidx.navigation.findNavController
+import androidx.navigation.ui.NavigationUI
 import com.example.android.navigation.databinding.FragmentTitleBinding
 
 class TitleFragment : Fragment() {
@@ -33,14 +32,28 @@ class TitleFragment : Fragment() {
                 inflater, R.layout.fragment_title, container, false)
         binding.playButton.setOnClickListener (
                 Navigation.createNavigateOnClickListener(R.id.action_titleFragment_to_gameFragment))
+        setHasOptionsMenu(true)
+
         // TODO (02) Create the new menu resource
         // Right click on the res folder within the Android project and select New Resource File
         // Name it overflow_menu with resource type menu.  Add an About menu item with the ID of
         // the aboutFragment.
+
         // TODO (03) Call setHasOptionsMenu(true)
         // This tells Android that our fragment has an Options Menu, so it will call
         // onCreateOptionsMenu
         return binding.root
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        super.onCreateOptionsMenu(menu, inflater)
+        inflater?.inflate(R.menu.overflow_menu, menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return NavigationUI.onNavDestinationSelected(item!!,
+        view!!.findNavController())
+                || super.onOptionsItemSelected(item)
     }
 
     // TODO (04) Override onCreateOptionsMenu
